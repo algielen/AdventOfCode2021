@@ -98,17 +98,17 @@ internal class SubmarineTest {
     }
 
     @Test
-    fun downIncreasesDepth() {
+    fun downDoesntIncreasesDepth() {
         val sub = Submarine()
         sub.down(1)
-        assertEquals(1, sub.depth)
+        assertEquals(0, sub.depth)
     }
 
     @Test
-    fun upDecreasesDepth() {
+    fun upDoesntDecreasesDepth() {
         val sub = Submarine()
         sub.up(1)
-        assertEquals(-1, sub.depth) //nobody told me submarine can't fly
+        assertEquals(0, sub.depth) //nobody told me submarine can't fly
     }
 
     @Test
@@ -149,6 +149,28 @@ internal class SubmarineTest {
         val instruction = Instruction(Instruction.Movement.DOWN, 1)
 
         sub.execute(instruction)
-        assertEquals(1, sub.depth)
+        assertEquals(1, sub.aim)
+    }
+
+    @Test
+    fun downIncreasesAim() {
+        val sub = Submarine()
+        sub.down(1)
+        assertEquals(1, sub.aim)
+    }
+
+    @Test
+    fun upDecreasesAim() {
+        val sub = Submarine()
+        sub.up(1)
+        assertEquals(-1, sub.aim)
+    }
+
+    @Test
+    fun downThenForward() {
+        val sub = Submarine()
+        sub.down(2)
+        sub.forward(2)
+        assertEquals(4, sub.depth)
     }
 }

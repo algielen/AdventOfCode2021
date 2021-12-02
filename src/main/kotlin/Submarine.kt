@@ -6,6 +6,7 @@ class Submarine {
     var instructions = ArrayList<Instruction>()
     var position = 0
     var depth = 0
+    var aim = 0
 
     private fun readResource(path: String): String {
         val resource = javaClass.getResource(path)
@@ -65,16 +66,17 @@ class Submarine {
 
     private fun compareSum(current: Triple<Int, Int, Int>, previous: Triple<Int, Int, Int>) = current.first + current.second + current.third > previous.first + previous.second + previous.third
 
-    fun forward(i: Int) {
-        position += i
+    fun forward(x: Int) {
+        position += x
+        depth += aim * x
     }
 
-    fun down(i: Int) {
-        depth += i
+    fun down(x: Int) {
+        aim += x
     }
 
-    fun up(i: Int) {
-        depth -= i
+    fun up(x: Int) {
+        aim -= x
     }
 
     fun execute(instruction: Instruction) {
