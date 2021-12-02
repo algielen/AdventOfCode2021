@@ -3,5 +3,9 @@ fun main(args: Array<String>) {
 
     var submarine = Submarine()
     submarine.loadDepths("/input_1.txt")
-    println(submarine.countIncreases())
+    val increases = submarine.countIncreases()
+    println("Simple increases : $increases")
+
+    val windowIncreases = submarine.countWindowsIncreases()
+    println("Window increases : $windowIncreases")
 }

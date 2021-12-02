@@ -42,4 +42,44 @@ internal class SubmarineTest {
         val actual = sub.countIncreases()
         assertEquals(1, actual)
     }
+
+    @Test
+    fun countWindowsIncreasesOneIncrease() {
+        val sub = Submarine()
+        sub.depthReadings.addAll(
+            listOf(1, 1, 1, 2)
+        )
+        val actual = sub.countWindowsIncreases()
+        assertEquals(1, actual)
+    }
+
+    @Test
+    fun countWindowsIncreasesTwoIncreases() {
+        val sub = Submarine()
+        sub.depthReadings.addAll(
+            listOf(1, 1, 1, 2, 2)
+        )
+        val actual = sub.countWindowsIncreases()
+        assertEquals(2, actual)
+    }
+
+    @Test
+    fun countWindowsIncreasesThreeIncreases() {
+        val sub = Submarine()
+        sub.depthReadings.addAll(
+            listOf(1, 1, 1, 2, 2, 2)
+        )
+        val actual = sub.countWindowsIncreases()
+        assertEquals(3, actual)
+    }
+
+    @Test
+    fun countWindowsIncreasesOneDecrease() {
+        val sub = Submarine()
+        sub.depthReadings.addAll(
+            listOf(2, 1, 1, 1)
+        )
+        val actual = sub.countWindowsIncreases()
+        assertEquals(0, actual)
+    }
 }
