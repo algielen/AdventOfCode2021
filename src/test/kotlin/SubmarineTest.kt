@@ -82,4 +82,73 @@ internal class SubmarineTest {
         val actual = sub.countWindowsIncreases()
         assertEquals(0, actual)
     }
+
+    @Test
+    fun subStartsAt0() {
+        val sub = Submarine()
+        assertEquals(0, sub.position)
+        assertEquals(0, sub.depth)
+    }
+
+    @Test
+    fun forwardIncreasesPosition() {
+        val sub = Submarine()
+        sub.forward(1)
+        assertEquals(1, sub.position)
+    }
+
+    @Test
+    fun downIncreasesDepth() {
+        val sub = Submarine()
+        sub.down(1)
+        assertEquals(1, sub.depth)
+    }
+
+    @Test
+    fun upDecreasesDepth() {
+        val sub = Submarine()
+        sub.up(1)
+        assertEquals(-1, sub.depth) //nobody told me submarine can't fly
+    }
+
+    @Test
+    fun executeForwardInstruction() {
+        val sub = Submarine()
+        val instruction = Instruction(Instruction.Movement.FORWARD, 1)
+
+        sub.execute(instruction)
+        assertEquals(1, sub.position)
+    }
+
+    @Test
+    fun executeForwardInstructions() {
+        val sub = Submarine()
+        sub.instructions.addAll(
+            listOf(Instruction(Instruction.Movement.FORWARD, 1))
+        )
+        sub.executeInstructions()
+        assertEquals(1, sub.position)
+    }
+
+    @Test
+    fun executeTwoForwardInstructions() {
+        val sub = Submarine()
+        sub.instructions.addAll(
+            listOf(
+                Instruction(Instruction.Movement.FORWARD, 1),
+                Instruction(Instruction.Movement.FORWARD, 2)
+            )
+        )
+        sub.executeInstructions()
+        assertEquals(3, sub.position)
+    }
+
+    @Test
+    fun executeDownInstruction() {
+        val sub = Submarine()
+        val instruction = Instruction(Instruction.Movement.DOWN, 1)
+
+        sub.execute(instruction)
+        assertEquals(1, sub.depth)
+    }
 }
