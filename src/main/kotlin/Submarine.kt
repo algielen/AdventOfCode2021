@@ -1,9 +1,11 @@
 import Instruction.Movement.*
+import java.util.*
 import java.util.stream.Collectors
 
 class Submarine {
     var depthReadings = ArrayList<Int>()
     var instructions = ArrayList<Instruction>()
+    var powerReadings = ArrayList<String>()
     var position = 0
     var depth = 0
     var aim = 0
@@ -33,6 +35,14 @@ class Submarine {
             .map(Instruction.Companion::parse)
             .collect(Collectors.toList())
         instructions.addAll(parsedInstructions)
+    }
+
+    fun loadPowerReadings(path: String) {
+        val input = readResource(path)
+        val parsedInstructions = input.split("\n").stream()
+            .filter(String::isNotEmpty)
+            .collect(Collectors.toList())
+        powerReadings.addAll(parsedInstructions)
     }
 
 
@@ -91,5 +101,67 @@ class Submarine {
         for (instruction in instructions) {
             execute(instruction)
         }
+    }
+
+    fun calculateGamma(): Int {
+        val count = Array(lengthOfPowerReading()) { Array(2) { 0 } }
+        for (powerReading in powerReadings) {
+            for ((bitPosition, bit) in powerReading.withIndex()) {
+                val value = Character.getNumericValue(bit)
+                count[bitPosition][value]++
+            }
+        }
+
+        val gammaArray = Arrays.stream(count)
+            .map { indexOfMax(it) }
+            .map { it.digitToChar() }
+            .collect(Collectors.toList())
+        val binaryString = String(gammaArray.toCharArray())
+        val value = binaryString.toInt(2)
+        return value
+    }
+
+    private fun lengthOfPowerReading() = powerReadings.first().length
+
+    private fun indexOfMax(list: Array<Int>): Int {
+        var max = list[0]
+        var maxPosition = 0
+        for ((i, value) in list.withIndex()) {
+            if (value > max) {
+                max = value
+                maxPosition = i
+            }
+        }
+        return maxPosition
+    }
+
+    fun calculateEpsilon(): Int { // TODO refactor
+        val count = Array(lengthOfPowerReading()) { Array(2) { 0 } }
+        for (epsilonValue in powerReadings) {
+            for ((bitPosition, bit) in epsilonValue.withIndex()) {
+                val value = Character.getNumericValue(bit)
+                count[bitPosition][value]++
+            }
+        }
+
+        val epsilonArray = Arrays.stream(count)
+            .map { indexOfMin(it) }
+            .map { it.digitToChar() }
+            .collect(Collectors.toList())
+        val binaryString = String(epsilonArray.toCharArray())
+        val value = binaryString.toInt(2)
+        return value
+    }
+
+    private fun indexOfMin(list: Array<Int>): Int {
+        var max = list[0]
+        var maxPosition = 0
+        for ((i, value) in list.withIndex()) {
+            if (value < max) {
+                max = value
+                maxPosition = i
+            }
+        }
+        return maxPosition
     }
 }

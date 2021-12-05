@@ -173,4 +173,58 @@ internal class SubmarineTest {
         sub.forward(2)
         assertEquals(4, sub.depth)
     }
+
+    @Test
+    fun calculateGammaOneValue() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100"))
+        val gamma = sub.calculateGamma()
+
+        assertEquals(4, gamma)
+    }
+
+    @Test
+    fun calculateGammaTwoEqualValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00100"))
+        val gamma = sub.calculateGamma()
+
+        assertEquals(4, gamma)
+    }
+
+    @Test
+    fun calculateGammaThreeValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("10100", "10100", "01011"))
+        val gamma = sub.calculateGamma()
+
+        assertEquals(20, gamma)
+    }
+
+    @Test
+    fun calculateEpsilonOneValue() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100")) // inverse: 11011 =27
+        val epsilon = sub.calculateEpsilon()
+
+        assertEquals(27, epsilon)
+    }
+
+    @Test
+    fun calculateEpsilonTwoValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00100"))
+        val epsilon = sub.calculateEpsilon()
+
+        assertEquals(27, epsilon)
+    }
+
+    @Test
+    fun calculateEpsilonThreeValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00100", "11011"))
+        val epsilon = sub.calculateEpsilon()
+
+        assertEquals(27, epsilon)
+    }
 }
