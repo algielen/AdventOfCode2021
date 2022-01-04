@@ -21,7 +21,7 @@ class Submarine {
 
     fun loadDepths(path: String) {
         val input = readResource(path)
-        val parsedDepths = input.split("\n").stream()
+        val parsedDepths = input.split(System.lineSeparator()).stream()
             .filter(String::isNotEmpty)
             .map(String::toInt)
             .collect(Collectors.toList())
@@ -30,7 +30,7 @@ class Submarine {
 
     fun loadInstructions(path: String) {
         val input = readResource(path)
-        val parsedInstructions = input.split("\n").stream()
+        val parsedInstructions = input.split(System.lineSeparator()).stream()
             .filter(String::isNotEmpty)
             .map(Instruction.Companion::parse)
             .collect(Collectors.toList())
@@ -39,7 +39,7 @@ class Submarine {
 
     fun loadPowerReadings(path: String) {
         val input = readResource(path)
-        val parsedInstructions = input.split("\n").stream()
+        val parsedInstructions = input.split(System.lineSeparator()).stream()
             .filter(String::isNotEmpty)
             .collect(Collectors.toList())
         powerReadings.addAll(parsedInstructions)
