@@ -28,4 +28,15 @@ class Assignments {
         submarine.executeInstructions()
         assertEquals(1864715580, submarine.position * submarine.depth)
     }
+
+    @Test
+    fun day3() {
+        val submarine = Submarine()
+        submarine.loadPowerReadings("/input_3.txt")
+        val gamma = submarine.calculateGamma()
+        val epsilon = submarine.calculateEpsilon()
+        val powerConsumption = gamma * epsilon
+        assertEquals(4191876, powerConsumption)
+    }
+
 }
