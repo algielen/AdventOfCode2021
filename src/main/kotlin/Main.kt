@@ -21,4 +21,13 @@ fun main() {
     println("Power readings : gamma $gamma, epsilon $epsilon")
     val powerConsumption = gamma * epsilon
     println("Final consumption : $powerConsumption")
+
+    val oxygen = submarine.calculateOxygenRating()
+    println("Oxygen rating :$oxygen")
+
+    val co2 = submarine.calculateCO2Rating()
+    println("CO2 rating :$co2")
+
+    val lifeSupport = co2 * oxygen
+    println("Life support rating : $lifeSupport")
 }

@@ -39,4 +39,16 @@ class Assignments {
         assertEquals(4191876, powerConsumption)
     }
 
+    @Test
+    fun day3bis() {
+        val submarine = Submarine()
+        submarine.loadPowerReadings("/input_3.txt")
+        val oxygen = submarine.calculateOxygenRating()
+
+        val co2 = submarine.calculateCO2Rating()
+        val lifeSupport = co2 * oxygen
+        assertEquals(3414905, lifeSupport)
+    }
+
+
 }

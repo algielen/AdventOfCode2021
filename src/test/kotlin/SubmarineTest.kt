@@ -227,4 +227,76 @@ internal class SubmarineTest {
 
         assertEquals(27, epsilon)
     }
+
+    @Test
+    fun calculateOxygenOneValue() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100"))
+        val oxygen = sub.calculateOxygenRating()
+
+        assertEquals(4, oxygen)
+    }
+
+    @Test
+    fun calculateOxygenTwoEqualValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00100"))
+        val oxygen = sub.calculateOxygenRating()
+
+        assertEquals(4, oxygen)
+    }
+
+    @Test
+    fun calculateOxygenTwoDiffValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00101"))
+        val oxygen = sub.calculateOxygenRating()
+
+        assertEquals(5, oxygen)
+    }
+
+    @Test
+    fun calculateOxygenThreeDiffValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00111", "00101"))
+        val oxygen = sub.calculateOxygenRating()
+
+        assertEquals(5, oxygen)
+    }
+
+    @Test
+    fun calculateCO2OneValue() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100"))
+        val oxygen = sub.calculateCO2Rating()
+
+        assertEquals(4, oxygen)
+    }
+
+    @Test
+    fun calculateCO2TwoEqualValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00100"))
+        val oxygen = sub.calculateCO2Rating()
+
+        assertEquals(4, oxygen)
+    }
+
+    @Test
+    fun calculateCO2TwoDiffValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00101"))
+        val oxygen = sub.calculateCO2Rating()
+
+        assertEquals(4, oxygen)
+    }
+
+    @Test
+    fun calculateCO2ThreeDiffValues() {
+        val sub = Submarine()
+        sub.powerReadings.addAll(listOf("00100", "00111", "00101"))
+        val oxygen = sub.calculateCO2Rating()
+
+        assertEquals(7, oxygen)
+    }
 }

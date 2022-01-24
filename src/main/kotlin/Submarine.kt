@@ -103,14 +103,9 @@ class Submarine {
         }
     }
 
+    // meh
     fun calculateGamma(): Int {
-        val count = Array(lengthOfPowerReading()) { Array(2) { 0 } }
-        for (powerReading in powerReadings) {
-            for ((bitPosition, bit) in powerReading.withIndex()) {
-                val value = Character.getNumericValue(bit)
-                count[bitPosition][value]++
-            }
-        }
+        val count = countBitValues()
 
         val gammaArray = Arrays.stream(count)
             .map { indexOfMax(it) }
@@ -135,14 +130,8 @@ class Submarine {
         return maxPosition
     }
 
-    fun calculateEpsilon(): Int { // TODO refactor
-        val count = Array(lengthOfPowerReading()) { Array(2) { 0 } }
-        for (epsilonValue in powerReadings) {
-            for ((bitPosition, bit) in epsilonValue.withIndex()) {
-                val value = Character.getNumericValue(bit)
-                count[bitPosition][value]++
-            }
-        }
+    fun calculateEpsilon(): Int {
+        val count = countBitValues()
 
         val epsilonArray = Arrays.stream(count)
             .map { indexOfMin(it) }
@@ -151,6 +140,17 @@ class Submarine {
         val binaryString = String(epsilonArray.toCharArray())
         val value = binaryString.toInt(2)
         return value
+    }
+
+    private fun countBitValues(): Array<Array<Int>> {
+        val count = Array(lengthOfPowerReading()) { Array(2) { 0 } }
+        for (powerReading in powerReadings) {
+            for ((bitPosition, bit) in powerReading.withIndex()) {
+                val value = Character.getNumericValue(bit)
+                count[bitPosition][value]++
+            }
+        }
+        return count
     }
 
     private fun indexOfMin(list: Array<Int>): Int {
@@ -163,5 +163,57 @@ class Submarine {
             }
         }
         return maxPosition
+    }
+
+    fun calculateOxygenRating(): Int {
+        return calculateRating(OxygenCriteria())
+    }
+
+    fun calculateCO2Rating(): Int {
+        return calculateRating(CO2Criteria())
+    }
+
+    fun calculateRating(criteria: Criteria<String>): Int {
+        var filteredArrays = powerReadings.toMutableList()
+
+        for (index in 0 until lengthOfPowerReading()) {
+            val zeros = mutableListOf<String>()
+            val ones = mutableListOf<String>()
+
+            for (powerReading in filteredArrays) {
+                when (powerReading[index]) {
+                    '0' -> {
+                        zeros += powerReading
+                    }
+                    '1' -> {
+                        ones += powerReading
+                    }
+                    else -> throw IllegalArgumentException("Case not implemented in when : ${powerReading[index]}")
+                }
+            }
+
+            filteredArrays = criteria.select(zeros, ones)
+        }
+
+        if (filteredArrays.size != 1) {
+            if (allElementsAreEqual(filteredArrays)) {
+                filteredArrays = mutableListOf(filteredArrays.first())
+            } else {
+                throw IllegalStateException("Failed to find the oxygen rating, final arrays : $filteredArrays")
+            }
+        }
+
+        val remaining = filteredArrays.first()
+        return remaining.toInt(2)
+    }
+
+    private fun allElementsAreEqual(filteredArrays: MutableList<String>): Boolean {
+        if (filteredArrays.size > 1) {
+            val first = filteredArrays.first()
+            if (filteredArrays.all { first == it }) {
+                return true
+            }
+        }
+        return false
     }
 }
