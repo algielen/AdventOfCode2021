@@ -19,30 +19,22 @@ class Submarine {
         return input
     }
 
-    fun loadDepths(path: String) {
-        val input = readResource(path)
-        val parsedDepths = input.split(System.lineSeparator()).stream()
-            .filter(String::isNotEmpty)
-            .map(String::toInt)
-            .collect(Collectors.toList())
-        depthReadings.addAll(parsedDepths)
+    fun loadDepths(parsedDepths: MutableList<Int>?) {
+        if (parsedDepths != null) {
+            depthReadings.addAll(parsedDepths)
+        }
     }
 
-    fun loadInstructions(path: String) {
-        val input = readResource(path)
-        val parsedInstructions = input.split(System.lineSeparator()).stream()
-            .filter(String::isNotEmpty)
-            .map(Instruction.Companion::parse)
-            .collect(Collectors.toList())
-        instructions.addAll(parsedInstructions)
+    fun loadInstructions(parsedInstructions: MutableList<Instruction>?) {
+        if (parsedInstructions != null) {
+            instructions.addAll(parsedInstructions)
+        }
     }
 
-    fun loadPowerReadings(path: String) {
-        val input = readResource(path)
-        val parsedInstructions = input.split(System.lineSeparator()).stream()
-            .filter(String::isNotEmpty)
-            .collect(Collectors.toList())
-        powerReadings.addAll(parsedInstructions)
+    fun loadPowerReadings(parsedReadings: MutableList<String>?) {
+        if (parsedReadings != null) {
+            powerReadings.addAll(parsedReadings)
+        }
     }
 
 

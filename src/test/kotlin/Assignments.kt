@@ -6,7 +6,8 @@ class Assignments {
     @Test
     fun day1() {
         val submarine = Submarine()
-        submarine.loadDepths("/input_1.txt")
+        val parser = InputParser()
+        submarine.loadDepths(parser.loadDepths("/input_1.txt"))
         val increases = submarine.countIncreases()
 
         assertEquals(1711, increases)
@@ -15,7 +16,8 @@ class Assignments {
     @Test
     fun day1b() {
         val submarine = Submarine()
-        submarine.loadDepths("/input_1.txt")
+        val parser = InputParser()
+        submarine.loadDepths(parser.loadDepths("/input_1.txt"))
         val increases = submarine.countWindowsIncreases()
 
         assertEquals(1743, increases)
@@ -24,7 +26,8 @@ class Assignments {
     @Test
     fun day2() {
         val submarine = Submarine()
-        submarine.loadInstructions("/input_2.txt")
+        val parser = InputParser()
+        submarine.loadInstructions(parser.loadInstructions("/input_2.txt"))
         submarine.executeInstructions()
         assertEquals(1864715580, submarine.position * submarine.depth)
     }
@@ -32,7 +35,8 @@ class Assignments {
     @Test
     fun day3() {
         val submarine = Submarine()
-        submarine.loadPowerReadings("/input_3.txt")
+        val parser = InputParser()
+        submarine.loadPowerReadings(parser.loadPowerReadings("/input_3.txt"))
         val gamma = submarine.calculateGamma()
         val epsilon = submarine.calculateEpsilon()
         val powerConsumption = gamma * epsilon
@@ -42,7 +46,8 @@ class Assignments {
     @Test
     fun day3bis() {
         val submarine = Submarine()
-        submarine.loadPowerReadings("/input_3.txt")
+        val parser = InputParser()
+        submarine.loadPowerReadings(parser.loadPowerReadings("/input_3.txt"))
         val oxygen = submarine.calculateOxygenRating()
 
         val co2 = submarine.calculateCO2Rating()
