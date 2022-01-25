@@ -1,5 +1,3 @@
-import java.util.stream.Collectors
-
 class InputParser {
     private fun readResource(path: String): String {
         val resource = javaClass.getResource(path)
@@ -10,30 +8,26 @@ class InputParser {
         return input
     }
 
-    // TODO replace stream
-    fun loadDepths(path: String): MutableList<Int>? {
+    fun loadDepths(path: String): List<Int> {
         val input = readResource(path)
-        val parsedDepths = input.split(System.lineSeparator()).stream()
+        val parsedDepths = input.split(System.lineSeparator())
             .filter(String::isNotEmpty)
             .map(String::toInt)
-            .collect(Collectors.toList())
         return parsedDepths
     }
 
-    fun loadInstructions(path: String): MutableList<Instruction>? {
+    fun loadInstructions(path: String): List<Instruction> {
         val input = readResource(path)
-        val parsedInstructions = input.split(System.lineSeparator()).stream()
+        val parsedInstructions = input.split(System.lineSeparator())
             .filter(String::isNotEmpty)
             .map(Instruction.Companion::parse)
-            .collect(Collectors.toList())
         return parsedInstructions
     }
 
-    fun loadPowerReadings(path: String): MutableList<String>? {
+    fun loadPowerReadings(path: String): List<String> {
         val input = readResource(path)
-        val parsedInstructions = input.split(System.lineSeparator()).stream()
+        val parsedInstructions = input.split(System.lineSeparator())
             .filter(String::isNotEmpty)
-            .collect(Collectors.toList())
         return parsedInstructions
     }
 }

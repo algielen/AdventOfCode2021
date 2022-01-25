@@ -19,22 +19,16 @@ class Submarine {
         return input
     }
 
-    fun loadDepths(parsedDepths: MutableList<Int>?) {
-        if (parsedDepths != null) {
-            depthReadings.addAll(parsedDepths)
-        }
+    fun loadDepths(parsedDepths: List<Int>) {
+        depthReadings.addAll(parsedDepths)
     }
 
-    fun loadInstructions(parsedInstructions: MutableList<Instruction>?) {
-        if (parsedInstructions != null) {
-            instructions.addAll(parsedInstructions)
-        }
+    fun loadInstructions(parsedInstructions: List<Instruction>) {
+        instructions.addAll(parsedInstructions)
     }
 
-    fun loadPowerReadings(parsedReadings: MutableList<String>?) {
-        if (parsedReadings != null) {
-            powerReadings.addAll(parsedReadings)
-        }
+    fun loadPowerReadings(parsedReadings: List<String>) {
+        powerReadings.addAll(parsedReadings)
     }
 
 
