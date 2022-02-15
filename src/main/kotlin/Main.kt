@@ -32,4 +32,20 @@ fun main() {
 
     val lifeSupport = co2 * oxygen
     println("Life support rating : $lifeSupport")
+
+    val bingo = parser.loadBingoInstructions("/input_4.txt")
+    println("Bingo loaded, ${bingo.bingoBoards.size} boards, ${bingo.instructions.size} instructions")
+    val gameResult = bingo.play()
+    if (gameResult == BingoGame.GameResult.ONE_WINNER) {
+        println("And we have a winner !")
+        val winner = bingo.winnerBoards().first()
+        println(winner)
+        val boardScore = winner.calculateScore()
+        val lastNumber = bingo.numbersPlayed().last()
+        val finalScore = boardScore * lastNumber
+        println("His score is $boardScore x $lastNumber = $finalScore")
+    } else {
+        println("Not the result we expected ... we have ${bingo.winnerBoards().size} winners")
+    }
+
 }
