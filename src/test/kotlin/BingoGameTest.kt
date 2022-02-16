@@ -96,6 +96,7 @@ internal class BingoGameTest {
 
         val instructions = listOf(1, 2, 3)
         val game = BingoGame(listOf(board), instructions)
+        game.play()
 
         val last = game.numbersPlayed().last()
 
