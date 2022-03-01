@@ -55,5 +55,26 @@ class Assignments {
         assertEquals(3414905, lifeSupport)
     }
 
+    @Test
+    fun day4() {
+        val parser = InputParser()
+        val bingoGame = parser.loadBingoInstructions("/input_4.txt")
+        bingoGame.play(BingoGame.RuleSet.CLASSICAL)
 
+        assertEquals(1, bingoGame.winnerBoards().size)
+        val boardScore = bingoGame.winnerBoards().first().calculateRemainingNumbersScore()
+        val lastNumber = bingoGame.numbersPlayed().last()
+
+        assertEquals(71708, boardScore * lastNumber)
+    }
+
+    @Test
+    fun day4bis() {
+        val parser = InputParser()
+        val bingoGame = parser.loadBingoInstructions("/input_4.txt")
+        bingoGame.play(BingoGame.RuleSet.TO_THE_END)
+
+        val boardScore = bingoGame.winnerBoards().last().calculateFinalScore()
+        assertEquals(34726, boardScore)
+    }
 }
