@@ -1,5 +1,6 @@
 class BingoBoard(val width: Int, val height: Int) {
     var board = Array(height) { Array(width) { Case(0, height, width) } }
+    var finalNumber = -1
 
     constructor(values: List<List<Int>>) : this(values.first().size, values.size) {
         fill(values)
@@ -21,6 +22,7 @@ class BingoBoard(val width: Int, val height: Int) {
                 if (case.value == proposedValue && !case.matched) {
                     case.matched = true
                     if (checkLineIsBingo(case.i) || checkRowIsBingo(case.j)) {
+                        finalNumber = proposedValue
                         return RoundResult.BINGO
                     }
                     return RoundResult.HIT
@@ -43,11 +45,15 @@ class BingoBoard(val width: Int, val height: Int) {
         return board[line].all { it.matched }
     }
 
-    fun calculateScore(): Int {
+    fun calculateRemainingNumbersScore(): Int {
         val sumOfUnmatched = board.flatMap { it.asIterable() }
             .filter { !it.matched }
             .sumOf { it.value }
         return sumOfUnmatched
+    }
+
+    fun calculateFinalScore(): Int {
+        return calculateRemainingNumbersScore() * finalNumber
     }
 
     override fun toString(): String {

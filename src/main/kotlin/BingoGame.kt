@@ -2,10 +2,12 @@ class BingoGame(val bingoBoards: List<BingoBoard>, val instructions: List<Int>) 
     private val winners = mutableListOf<BingoBoard>()
     private val numbersPlayed = mutableListOf<Int>()
 
-    fun play(): GameResult {
+    fun play(ruleSet: RuleSet): GameResult {
         for (instruction in instructions) {
             for (board in bingoBoards) {
-
+                if (board in winners) {
+                    continue
+                }
                 val roundResult = board.announceValue(instruction)
                 if (roundResult == BingoBoard.RoundResult.BINGO) {
                     winners.add(board)
@@ -13,11 +15,21 @@ class BingoGame(val bingoBoards: List<BingoBoard>, val instructions: List<Int>) 
             }
             numbersPlayed.add(instruction)
 
-            if (winners.isNotEmpty()) {
-                if (winners.size == 1) {
-                    return GameResult.ONE_WINNER
-                } else {
-                    return GameResult.MULTIPLE_WINNERS
+            if (ruleSet == RuleSet.CLASSICAL) {
+                if (winners.isNotEmpty()) {
+                    if (winners.size == 1) {
+                        return GameResult.ONE_WINNER
+                    } else {
+                        return GameResult.MULTIPLE_WINNERS
+                    }
+                }
+            } else if (ruleSet == RuleSet.TO_THE_END) {
+                if (winners.size == bingoBoards.size) {
+                    if (winners.size == 1) {
+                        return GameResult.ONE_WINNER
+                    } else {
+                        return GameResult.MULTIPLE_WINNERS
+                    }
                 }
             }
         }
@@ -32,6 +44,11 @@ class BingoGame(val bingoBoards: List<BingoBoard>, val instructions: List<Int>) 
         NO_WINNER,
         ONE_WINNER,
         MULTIPLE_WINNERS,
+    }
+
+    enum class RuleSet {
+        CLASSICAL,
+        TO_THE_END
     }
 
 }

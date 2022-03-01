@@ -115,7 +115,7 @@ internal class BingoBoardTest {
 
         bingo.announceValue(1)
 
-        val score = bingo.calculateScore()
+        val score = bingo.calculateRemainingNumbersScore()
         assertEquals(9, score)
     }
 
@@ -132,7 +132,7 @@ internal class BingoBoardTest {
         bingo.announceValue(2)
         bingo.announceValue(1)
 
-        val score = bingo.calculateScore()
+        val score = bingo.calculateRemainingNumbersScore()
         assertEquals(7, score)
     }
 
@@ -145,6 +145,23 @@ internal class BingoBoardTest {
 
         bingo.announceValue(3)
 
-        assertEquals(0, bingo.calculateScore())
+        assertEquals(0, bingo.calculateRemainingNumbersScore())
+    }
+
+    @Test
+    fun calculateFinalScoreTwoCasesMatched() {
+        val bingo = BingoBoard(2, 2)
+        bingo.fill(
+            listOf(
+                listOf(1, 3),
+                listOf(2, 4)
+            )
+        )
+
+        bingo.announceValue(1)
+        bingo.announceValue(2)
+
+        val score = bingo.calculateFinalScore()
+        assertEquals(14, score)
     }
 }

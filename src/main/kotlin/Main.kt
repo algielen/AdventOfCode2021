@@ -33,19 +33,31 @@ fun main() {
     val lifeSupport = co2 * oxygen
     println("Life support rating : $lifeSupport")
 
+    //playBingo(parser, BingoGame.RuleSet.CLASSICAL)
+    playBingo(parser, BingoGame.RuleSet.TO_THE_END)
+}
+
+private fun playBingo(parser: InputParser, ruleset: BingoGame.RuleSet) {
     val bingo = parser.loadBingoInstructions("/input_4.txt")
     println("Bingo loaded, ${bingo.bingoBoards.size} boards, ${bingo.instructions.size} instructions")
-    val gameResult = bingo.play()
+    val gameResult = bingo.play(ruleset)
     if (gameResult == BingoGame.GameResult.ONE_WINNER) {
         println("And we have a winner !")
         val winner = bingo.winnerBoards().first()
         println(winner)
-        val boardScore = winner.calculateScore()
+        val boardScore = winner.calculateRemainingNumbersScore()
         val lastNumber = bingo.numbersPlayed().last()
         val finalScore = boardScore * lastNumber
         println("His score is $boardScore x $lastNumber = $finalScore")
+    } else if (gameResult == BingoGame.GameResult.MULTIPLE_WINNERS && ruleset == BingoGame.RuleSet.TO_THE_END) {
+        println("Here is the order of our winners")
+        val first = bingo.winnerBoards().first()
+        println("The first, with a score of ${first.calculateFinalScore()}")
+        println(first)
+        val last = bingo.winnerBoards().last()
+        println("And the last, with a score of ${last.calculateFinalScore()}")
+        println(last)
     } else {
-        println("Not the result we expected ... we have ${bingo.winnerBoards().size} winners")
+        println("Not the result we expected : $gameResult  ... we have ${bingo.winnerBoards().size} winners")
     }
-
 }
