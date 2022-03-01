@@ -210,6 +210,6 @@ internal class BingoGameTest {
         val gameResult = game.play(BingoGame.RuleSet.TO_THE_END)
         assertEquals(BingoGame.GameResult.MULTIPLE_WINNERS, gameResult)
 
-        assertEquals(14, board.calculateRemainingNumbersScore())
+        assertEquals(14, board.calculateFinalScore())
     }
 }
